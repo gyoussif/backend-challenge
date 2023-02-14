@@ -18,8 +18,8 @@ questions_text = [
 choices_text = [
     ['Red', 'Blue', 'Green', 'Yellow'],
     ['Pizza', 'Hamburger', 'Steak', 'Koshary'],
-    ['The Shawshank Redemption', 'The Godfather', 'The Dark Knight', 'Pulp Fiction'],
-    ['Bohemian Rhapsody', 'Stairway to Heaven', 'Imagine', 'Unstoppable']
+    ['Joker', 'The Godfather', 'The Dark Knight', 'Pulp Fiction'],
+    ['Bohemian Rhapsody', 'Ya Ghaly', 'Imagine', 'Unstoppable']
 ]
 
 def create_questions_and_choices():
