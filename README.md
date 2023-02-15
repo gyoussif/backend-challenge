@@ -52,9 +52,9 @@ docker-compose -f docker-compose.dev.yml up
     ```sh
     python -m create_reviews 
     ```
-3. creating a superuser (username:admin, password:admin)
+3. creating a superuser (username:admin, password:password)
     ```sh
-    echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@email.com', 'admin')" | python manage.py shell
+    echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@email.com', 'password')" | python manage.py shell
     ```
 4. run django server
     ```sh
@@ -75,11 +75,18 @@ need.
 - [x] implement an endpoint that returns the number of answers per day over time (given from and to dates)."
 - [x] the endpoint should be accessed by authenticated users only.
 - [x] create 3 users using the built-in user module in Django, make the first one superuser only, the second one staff only and the last one is active only. now, do whatever is necessary to make the endpoint only accessed by a superuser or a staff user and otherwise a user is not allowed.
-- [] do a benchmark of your endpoint performance when there are 4000, 8000, 12000, 16000, 20000 reviews, is there any performance issues? how it could be improved?.
+- [x] do a benchmark of your endpoint performance when there are 4000, 8000, 12000, 16000, 20000 reviews, is there any performance issues? how it could be improved?.
 - [] when merging reviews under the same date the answers gets repeated under this object, can you also merge answers to appear once and add a new field for their count?
 - [x] dockerize your application ( ignore adding the DB backup file as long as your DB will be dockerized with the data
 ## Submit-requirements
-- [] backup your DB with all the data it has and add the backup file along with your app files.
-- [] create a readme.md file in the root of your app that shows your app requirements, what did you use and why, how to build it and run it,... etc.
-- [] create a public git repo on any platform you like ex: GitHub, GitLab,... etc and share the link of this repo when you are ready.
-- [] putin the readme.md file which bonuses did you decide to do.
+- [x] backup your DB with all the data it has and add the backup file along with your app files.
+- [x] create a readme.md file in the root of your app that shows your app requirements, what did you use and why, how to build it and run it,... etc.
+- [x] create a public git repo on any platform you like ex: GitHub, GitLab,... etc and share the link of this repo when you are ready.
+- [x] putin the readme.md file which bonuses did you decide to do.
+
+## How to Improve and Optimize the performance
+1. we can cache the queries using redis to reduce the load on the db
+2. we can optimize the database schema by
+    1. remove Review table
+    2. replace review field in the answer model by inheriting the timestampmodel to get 
+3. use pagination to limit the number of results returned by the endpoint

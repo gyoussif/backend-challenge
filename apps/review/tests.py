@@ -3,11 +3,10 @@ from django.utils import timezone
 from .models import Review, Question, Choice, Answer
 from django.contrib.auth.models import User
 from model_bakery import baker
-
+import time
 class ReviewAnswersViewTestCase(TestCase):
     def setUp(self):
         self.list_reviews_url='/api/reviews/'
-        self.count_reviews_per_day_url='/api/reviews/count_per_day/'
 
         self.password='password'
         self.admin = User.objects.create_user(username='admin', password=self.password,is_superuser=True)
@@ -44,9 +43,6 @@ class ReviewAnswersViewTestCase(TestCase):
     def _test_permission(self, status):
         response = self.client.get(self.list_reviews_url)
         self.assertEqual(response.status_code, status)
-        response = self.client.get(self.list_reviews_url)
-        self.assertEqual(response.status_code, status)
-
 
     def test_list_answers_without_dates(self):
         response = self.client.get(self.list_reviews_url)
@@ -77,8 +73,14 @@ class ReviewAnswersViewTestCase(TestCase):
         response = self.client.get(self.list_reviews_url,data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
+        
+    def test_endpoint_performace(self):
+        for i in range(1,6):
+            baker.make(Answer,_quantity=4000)
+            start_time = time.time()
+            response = self.client.get(self.list_reviews_url)
+            self.assertEqual(response.status_code, 200)
+            end_time = time.time()
+            response_time = end_time - start_time
+            print(f'Response time for {i*4000} reviews: {response_time:.2f} seconds')
 
-    def test_count_reviews_per_day_without_dates(self):
-        response = self.client.get(self.count_reviews_per_day_url)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 3)

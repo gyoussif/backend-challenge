@@ -6,10 +6,15 @@ python3 manage.py migrate
 
 echo "Collecting static.."
 echo "yes" | python3 manage.py collectstatic
-echo "Creating Superuser..."
 
-echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', 'admin@email.com', 'admin')" | python manage.py shell
+echo "Creating Superuser, Staffuser and normaluser..."
+echo "from django.contrib.auth import get_user_model;\
+       User = get_user_model();\
+       User.objects.create_superuser('admin', 'admin@email.com', 'password');\
+       User.objects.create_user('staff', 'staff@email.com', 'password',is_staff=True);\
+       User.objects.create_user('user', 'user@email.com', 'password')" | python manage.py shell
 
+#comment this line if the db already populated
 echo "Populate DB"
 python3 -m create_reviews   
 
