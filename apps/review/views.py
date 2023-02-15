@@ -1,23 +1,21 @@
-import django
-from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.viewsets import GenericViewSet, mixins
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.response import Response
 
 from apps.review import models
 
-from . import serializers
+from . import serializers,permissions
 from django.db.models import Count,Q
-from django.db.models.functions import Cast
-from django.db.models.fields import DateField
 from django.db.models.functions import TruncDate
 class ReviewViewSet(GenericViewSet):
     serializer_class = serializers.RetrieveReviewSerializer
+    permission_classes = [permissions.IsAdminOrStaffUser]
 
     def list(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.query_params)
         serializer.is_valid(raise_exception=True)
         filter_criteria = Q()
+        
         
         if 'from_date' in serializer.validated_data:
             from_date = serializer.validated_data['from_date']
@@ -41,7 +39,7 @@ class ReviewViewSet(GenericViewSet):
                 'count': count
             })
         return Response(results)
-        
+
     @action(detail=False, methods=['get'])
     def count_per_day(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.query_params)

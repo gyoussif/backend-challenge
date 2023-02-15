@@ -3,7 +3,6 @@ version: "3"
 services:
   # Database Server
   postgis:
-    # https://github.com/kartoza/docker-postgis
     image: postgis/postgis:15-3.3
     container_name: postgis
     restart: always
