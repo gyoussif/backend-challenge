@@ -1,7 +1,8 @@
 # Backend Challenge
 ## Getting Started
 ### Prerequisites
-Make sure you have a `pip` and `virtualenv` installed on your machine
+For Local run 
+Make sure you have a `pip`, `virtualenv` and `docker` installed on your machine
 To install:
   ```sh
     sudo apt install python3-pip && pip3 install virtualenv
@@ -76,7 +77,7 @@ need.
 - [x] the endpoint should be accessed by authenticated users only.
 - [x] create 3 users using the built-in user module in Django, make the first one superuser only, the second one staff only and the last one is active only. now, do whatever is necessary to make the endpoint only accessed by a superuser or a staff user and otherwise a user is not allowed.
 - [x] do a benchmark of your endpoint performance when there are 4000, 8000, 12000, 16000, 20000 reviews, is there any performance issues? how it could be improved?.
-- [] when merging reviews under the same date the answers gets repeated under this object, can you also merge answers to appear once and add a new field for their count?
+- [x] when merging reviews under the same date the answers gets repeated under this object, can you also merge answers to appear once and add a new field for their count?
 - [x] dockerize your application ( ignore adding the DB backup file as long as your DB will be dockerized with the data
 ## Submit-requirements
 - [x] backup your DB with all the data it has and add the backup file along with your app files.
@@ -88,5 +89,7 @@ need.
 1. we can cache the queries using redis to reduce the load on the db
 2. we can optimize the database schema by
     1. remove Review table
-    2. replace review field in the answer model by inheriting the timestampmodel to get 
+    2. replace review field in the answer model by inheriting the timestampmodel
+    3. make choices and questions relation one to many instead of many to many 
 3. use pagination to limit the number of results returned by the endpoint
+4. we can integrate with elasticsearch for faster querying
